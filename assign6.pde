@@ -28,7 +28,10 @@ class FlightType
 int state = GameState.START;
 int currentType = EnemysShowingType.STRAIGHT;
 int enemyCount = 8;
+//
 Enemy[] enemys = new Enemy[enemyCount];
+Bullet[] bullets=new Bullet[5];
+//
 Fighter fighter;
 Background bg;
 FlameMgr flameMgr;
@@ -52,6 +55,10 @@ void setup () {
 	treasure = new Treasure();
 	hpDisplay = new HPDisplay();
 	fighter = new Fighter(20);
+    for(int i=0;i<5;i++)
+    {
+      bullets[i]=new Bullet(-960,-960);
+    }
 }
 
 void draw()
@@ -64,7 +71,13 @@ void draw()
 		treasure.draw();
 		flameMgr.draw();
 		fighter.draw();
-
+            //bullet
+            for(int i=0;i<5;i++)
+            {
+              bullets[i].move();
+              bullets[i].draw();
+              bullets[i].moveOut();
+            }
 		//enemys
 		if(millis() - time >= wait){
 			addEnemy(currentType++);
@@ -75,6 +88,16 @@ void draw()
 			if (enemys[i]!= null) {
 				enemys[i].move();
 				enemys[i].draw();
+                            for(int j=0;j<5;j++)
+                            {
+                              if(isHit2(enemys[i],bullets[j]))
+                              {
+                                  flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                                  enemys[i].x=-960;
+                                  bullets[j].x=-960;
+                                  bullets[j].y=-960;
+                              }
+                            }
 				if (enemys[i].isCollideWithFighter()) {
 					fighter.hpValueChange(-20);
 					flameMgr.addFlame(enemys[i].x, enemys[i].y);
@@ -86,15 +109,24 @@ void draw()
 			}
 		}
 		// 這地方應該加入Fighter 血量顯示UI
-		
+            hpDisplay.updateWithFighterHP(fighter.hp);		
 	}
 	else if (state == GameState.END) {
 		bg.draw();
+            currentType = EnemysShowingType.STRAIGHT;
 	}
+}
+boolean isHit2(Enemy aa,Bullet c)
+{
+	// Collision x-axis?
+    boolean collisionX = (aa.x + 61 >= c.x) && (c.x + 31 >= aa.x);
+    // Collision y-axis?
+    boolean collisionY = (aa.y + 61 >= c.y) && (c.y + 27 >= aa.y);
+    return collisionX && collisionY;
 }
 boolean isHit(int ax, int ay, int aw, int ah, int bx, int by, int bw, int bh)
 {
-	// Collision x-axis?
+  // Collision x-axis?
     boolean collisionX = (ax + aw >= bx) && (bx + bw >= ax);
     // Collision y-axis?
     boolean collisionY = (ay + ah >= by) && (by + bh >= ay);
@@ -136,4 +168,3 @@ void keyReleased(){
     }
   }
 }
-
