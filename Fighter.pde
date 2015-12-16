@@ -32,6 +32,13 @@ class Fighter{
 	}
 
 	void shoot() {
+      for(int i= 0;i<5;i++){
+          if(bullets[i].y == -960){
+            bullets[i].x = fighter.x+10;
+            bullets[i].y = fighter.y+13;
+            break;
+          }
+       }
 		
 	}
 
