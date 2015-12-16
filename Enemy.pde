@@ -23,14 +23,27 @@ class Enemy{
 
 	boolean isCollideWithFighter()
 	{
-		return false;
+      if(isHit1(fighter))
+        return true;
+      else
+        return false;
 	}
 
 	boolean isOutOfBorder()
 	{
-		return false;
+      if(x>width)
+        return true;
+      else
+        return false;
 	}
-
+    boolean isHit1(Fighter b)
+  {
+    // Collision x-axis?
+      boolean collisionX = (this.x + 61>= b.x) && (b.x + 51 >= this.x);
+      // Collision y-axis?
+      boolean collisionY = (this.y + 61 >= b.y) && (b.y + 51 >= this.y);
+      return collisionX && collisionY;
+  }
 
 }
 
