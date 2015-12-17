@@ -86,7 +86,7 @@ void draw()
 
 		for (int i = 0; i < enemyCount; ++i) {
 			if (enemys[i]!= null) {
-                            if(currentType==0 )
+                            if(currentType==EnemysShowingType.STRAIGHT )
                             {
                               enemys[i].move2();
                               enemys[i].draw2();
@@ -107,7 +107,7 @@ void draw()
                               }
                             }
 				if (enemys[i].isCollideWithFighter()) {
-                                    if(currentType==0 )
+                                    if(currentType==EnemysShowingType.STRAIGHT )
                                       fighter.hpValueChange(-50);
                                     else
 			                  fighter.hpValueChange(-20);
