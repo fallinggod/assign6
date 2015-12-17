@@ -5,12 +5,13 @@ class Enemy{
 	int speed = 5;
 
 	PImage enemyImg;
+    PImage bossImg;
 	Enemy(int x, int y, int type) {
 		this.x = x;
 		this.y = y;
 		this.type = type;
 		enemyImg = loadImage("img/enemy.png");
-		
+            bossImg = loadImage("img/enemy2.png");		
 	}
 	void move() {
 		this.x+= 5;	
@@ -20,6 +21,14 @@ class Enemy{
 	{
 		image(enemyImg, x, y);
 	}
+    void move2()
+    {
+      this.x+=2;
+    }
+    void draw2()
+    {
+      image(bossImg,x,y);
+    }
 
 	boolean isCollideWithFighter()
 	{
@@ -112,7 +121,7 @@ void addDiamondEnemy()
 }
 void addEnemyStrong()
 {
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 5; ++i){
 		enemys[i] = new Enemy(0, 40+ i * 85, FlightType.ENEMYSTRONG);
 	}
 }
