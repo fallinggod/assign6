@@ -86,8 +86,16 @@ void draw()
 
 		for (int i = 0; i < enemyCount; ++i) {
 			if (enemys[i]!= null) {
-				enemys[i].move();
-				enemys[i].draw();
+                            if(currentType==0 )
+                            {
+                              enemys[i].move2();
+                              enemys[i].draw2();
+                            }
+                            else
+                            {
+    		       	  enemys[i].move();
+    			  enemys[i].draw();
+                            }
                             for(int j=0;j<5;j++)
                             {
                               if(isHit2(enemys[i],bullets[j]))
@@ -99,7 +107,10 @@ void draw()
                               }
                             }
 				if (enemys[i].isCollideWithFighter()) {
-					fighter.hpValueChange(-20);
+                                    if(currentType==0 )
+                                      fighter.hpValueChange(-50);
+                                    else
+			                  fighter.hpValueChange(-20);
 					flameMgr.addFlame(enemys[i].x, enemys[i].y);
 					enemys[i]=null;
 				}
